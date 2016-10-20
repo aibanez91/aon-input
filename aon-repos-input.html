@@ -1,0 +1,74 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<!--
+`aon-repos-input`
+aon-repos-input
+
+@demo demo/index.html
+-->
+
+<dom-module id="aon-repos-input">
+  <template>
+  <style>
+     :host {
+       display: inline-block;
+     }
+     :host([hidden]) {
+       display: none !important;
+     }
+     input[is="iron-input"] {
+       outline: none;
+       box-shadow: none;
+       border: none;
+       width: auto;
+       text-align: center;
+     }
+     .container {
+       @apply(--layout-horizontal);
+     }
+     .separate{
+       font: 16px Arial;
+       padding-left: 5px;
+       padding-right: 5px;
+       padding-top: 5px;
+     }
+  </style>
+
+    <paper-input-container always-float-label=true>
+      <label on-down="_preventDefault" id="label" hidden$="[[!label]]" aria-hidden="true" on-tap="_openAsync">[[label]]</label>
+
+     <div class="container">
+       <input is="iron-input" bind-value="{{name}}" size="10" aria-label="username or organization name">
+       <div class="separate">/</div>
+       <input is="iron-input" bind-value="{{repository}}" size="10" aria-label="repository name">
+     </div>
+   </paper-input-container>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'aon-repos-input',
+
+      properties: {
+        label: {
+          type: String,
+          value: 'Repositorio'
+        },
+        name: {
+          type: String
+        },
+        repository: {
+          type: String
+        },
+
+      },
+
+      _getValue: function(name, repository) {
+        return name.trim() + '/' + repository.trim();
+      }
+
+    });
+  </script>
+</dom-module>
